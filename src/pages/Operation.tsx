@@ -7,6 +7,7 @@ import { Operation, getOperation, operationToProto } from "../services/Operation
 import { ethers, formatUnits } from "ethers"
 import { symbolForToken, unitsForToken } from "../services/UnitsFor"
 import { DecodedCalldata } from "../components/Calldata"
+import { Endorser } from "../components/Endorser"
 
 export function Operation() {
   const { id } = useParams()
@@ -27,13 +28,14 @@ export function Operation() {
   }, [])
 
   return <Box>
-    <Title order={3}>Operation {id}</Title>
+    <Title order={2}>{id}</Title>
     <Space h="xl" />
     { (!op && !error) && <Loader /> }
     { error && <Container>{error}</Container> }
     { op && <>
       <Grid grow>
         <Grid.Col span={2}>
+          <Title order={3}>Operation details</Title>
           <Table>
             <Table.Thead>
               <Table.Tr>
@@ -63,7 +65,7 @@ export function Operation() {
                 <Table.Th>Token rate</Table.Th>
                 <Table.Td>
                   <NumberFormatter thousandSeparator value={
-                    Number(op.baseFeeScalingFactor) / Number(op.baseFeeNormalizationFactor)
+                    (Number(op.baseFeeScalingFactor) * 10 ** 18) / (Number(op.baseFeeNormalizationFactor) * 10 ** unitsForToken(op.feeToken))
                   } />
                 </Table.Td>
               </Table.Tr>
@@ -117,11 +119,13 @@ export function Operation() {
               lineBreak: "anywhere",
             }}
           >
-            <JsonView
+            <Title order={3}>Endorser result</Title>
+            <Endorser operation={op} />
+            {/* <JsonView
               shortenTextAfterLength={0}
               displayDataTypes={false}
               value={operationToProto(op)}
-              />
+              /> */}
           </Container>
         </Grid.Col>
       </Grid>

@@ -3,6 +3,7 @@ import { ethers } from 'ethers'
 import { Operation } from '../pages/Operation'
 import { getIpfsData } from './Ipfs'
 import { parseArray, parseBigInt } from '../utils/Math'
+import { Address, getAddress } from 'viem'
 
 export type OperationProto = {
   entrypoint: string,
@@ -21,11 +22,11 @@ export type OperationProto = {
 }
 
 export type Operation = {
-  entrypoint: string
+  entrypoint: Address
   callData: Uint8Array
   gasLimit: bigint
-  feeToken: string
-  endorser: string
+  feeToken: Address
+  endorser: Address
   endorserCallData: Uint8Array
   endorserGasLimit: bigint
   maxFeePerGas: bigint
@@ -57,11 +58,11 @@ export function isOperationProto(data: any): data is OperationProto {
 
 export function protoToOperation(proto: OperationProto): Operation {
   const parsed = {
-    entrypoint: proto.entrypoint,
+    entrypoint: getAddress(proto.entrypoint),
     callData: parseArray(proto.callData),
     gasLimit: parseBigInt(proto.gasLimit),
-    feeToken: proto.feeToken,
-    endorser: proto.endorser,
+    feeToken: getAddress(proto.feeToken),
+    endorser: getAddress(proto.endorser),
     endorserCallData: parseArray(proto.endorserCallData),
     endorserGasLimit: parseBigInt(proto.endorserGasLimit),
     maxFeePerGas: parseBigInt(proto.maxFeePerGas),
