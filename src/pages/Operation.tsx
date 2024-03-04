@@ -37,6 +37,10 @@ export function Operation() {
           <Table>
             <Table.Thead>
               <Table.Tr>
+                <Table.Th>Chain ID</Table.Th>
+                <Table.Td>{op.chainId.toString()}</Table.Td>
+              </Table.Tr>
+              <Table.Tr>
                 <Table.Th>Entrypoint</Table.Th>
                 <Table.Td>{op.entrypoint}</Table.Td>
               </Table.Tr>

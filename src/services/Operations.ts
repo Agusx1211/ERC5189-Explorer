@@ -17,6 +17,7 @@ export type OperationProto = {
   baseFeeScalingFactor: string,
   baseFeeNormalizationFactor: string,
   hasUntrustedContext: boolean
+  chainId: string
 }
 
 export type Operation = {
@@ -33,6 +34,7 @@ export type Operation = {
   baseFeeNormalizationFactor: bigint
   hasUntrustedContext: boolean
   maxPayment: bigint
+  chainId: bigint
 }
 
 export function isOperationProto(data: any): data is OperationProto {
@@ -48,7 +50,8 @@ export function isOperationProto(data: any): data is OperationProto {
     typeof data.priorityFeePerGas === 'string' &&
     typeof data.baseFeeScalingFactor === 'string' &&
     typeof data.baseFeeNormalizationFactor === 'string' &&
-    typeof data.hasUntrustedContext === 'boolean'
+    typeof data.hasUntrustedContext === 'boolean' &&
+    typeof data.chainId === 'string'
   )
 }
 
@@ -65,7 +68,8 @@ export function protoToOperation(proto: OperationProto): Operation {
     priorityFeePerGas: parseBigInt(proto.priorityFeePerGas),
     baseFeeScalingFactor: parseBigInt(proto.baseFeeScalingFactor),
     baseFeeNormalizationFactor: parseBigInt(proto.baseFeeNormalizationFactor),
-    hasUntrustedContext: proto.hasUntrustedContext
+    hasUntrustedContext: proto.hasUntrustedContext,
+    chainId: parseBigInt(proto.chainId)
   }
 
   const maxPayment = (parsed.maxFeePerGas * parsed.gasLimit * parsed.baseFeeScalingFactor) / parsed.baseFeeNormalizationFactor
@@ -89,7 +93,8 @@ export function operationToProto(operation: Operation): OperationProto {
     priorityFeePerGas: operation.priorityFeePerGas.toString(),
     baseFeeScalingFactor: operation.baseFeeScalingFactor.toString(),
     baseFeeNormalizationFactor: operation.baseFeeNormalizationFactor.toString(),
-    hasUntrustedContext: operation.hasUntrustedContext
+    hasUntrustedContext: operation.hasUntrustedContext,
+    chainId: operation.chainId.toString()
   }
 }
 
