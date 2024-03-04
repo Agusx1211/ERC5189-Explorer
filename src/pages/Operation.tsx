@@ -4,7 +4,7 @@ import { Container, Grid, Loader, NumberFormatter, Pill, Table, Title, Space, Bo
 
 import JsonView from '@uiw/react-json-view'
 import { Operation, getOperation, operationToProto } from "../services/Operations"
-import { ethers } from "ethers"
+import { ethers, formatUnits } from "ethers"
 import { symbolForToken, unitsForToken } from "../services/UnitsFor"
 import { DecodedCalldata } from "../components/Calldata"
 
@@ -67,13 +67,13 @@ export function Operation() {
               <Table.Tr>
                 <Table.Th>Max fee per gas</Table.Th>
                 <Table.Td>
-                  <NumberFormatter thousandSeparator value={op.maxFeePerGas.toString()} />
+                  <NumberFormatter thousandSeparator value={formatUnits(op.maxFeePerGas, "gwei")} /> GWEI
                 </Table.Td>
               </Table.Tr>
               <Table.Tr>
                 <Table.Th>Priority per gas</Table.Th>
                 <Table.Td>
-                  <NumberFormatter thousandSeparator value={op.priorityFeePerGas.toString()} />
+                  <NumberFormatter thousandSeparator value={formatUnits(op.priorityFeePerGas, "gwei")} /> GWEI
                 </Table.Td>
               </Table.Tr>
               <Table.Tr>
@@ -88,7 +88,7 @@ export function Operation() {
                 <Table.Th>Min fee payment</Table.Th>
                 <Table.Td>
                   <NumberFormatter thousandSeparator suffix={` ${symbolForToken(op.feeToken)} + basefee`} value={
-                    ethers.formatUnits(op.priorityFeePerGas * op.gasLimit, unitsForToken(op.feeToken))
+                    ethers.formatUnits((op.priorityFeePerGas * op.gasLimit * op.baseFeeScalingFactor) / op.baseFeeNormalizationFactor, unitsForToken(op.feeToken))
                   } />
                 </Table.Td>
               </Table.Tr>

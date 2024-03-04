@@ -1,4 +1,4 @@
-import { Center, Input, Grid } from "@mantine/core"
+import { Input, Grid } from "@mantine/core"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 

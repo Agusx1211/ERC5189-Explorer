@@ -1,4 +1,4 @@
-import { AppShell, Container, MantineProvider } from "@mantine/core"
+import { AppShell, MantineProvider } from "@mantine/core"
 import { HashRouter as Router, Route, Routes } from "react-router-dom"
 
 import "./App.css"

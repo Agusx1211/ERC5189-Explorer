@@ -68,9 +68,11 @@ export function protoToOperation(proto: OperationProto): Operation {
     hasUntrustedContext: proto.hasUntrustedContext
   }
 
+  const maxPayment = (parsed.maxFeePerGas * parsed.gasLimit * parsed.baseFeeScalingFactor) / parsed.baseFeeNormalizationFactor
+
   return {
     ...parsed,
-    maxPayment: parsed.maxFeePerGas * parsed.gasLimit
+    maxPayment
   }
 }
 

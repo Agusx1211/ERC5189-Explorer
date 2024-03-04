@@ -2,8 +2,7 @@
 import axios from 'axios'
 
 
-// const ipfsBaseUrl = 'https://ipfs.io/ipfs/<cid>'
-const ipfsBaseUrl = 'http://192.168.122.23:9091/api/v0/cat?arg=<cid>'
+const ipfsBaseUrl = '	https://ipfs.eth.aragon.network/ipfs/<cid>'
 
 let supportedIpfs = true
 
